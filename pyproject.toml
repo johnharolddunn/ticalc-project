@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ticalc"
+version = "1.0.0"
+description = "Inspect, extract and rebuild TI-Nspire .tns documents in pure Python"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["pycryptodome>=3.15"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+ticalc = "ticalc.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

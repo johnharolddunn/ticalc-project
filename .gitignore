@@ -1,0 +1,25 @@
+.venv/
+__pycache__/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# Logs, backups, scratch
+*.log
+*.bak
+*.old
+*.tmp
+*.raw
+*Backups*/
+*.verify.xml/
+*.tns.xml/
+*.xml
+
+# Calculator documents: only the small test fixtures are tracked
+*.tns
+!tests/data/*.tns
+
+# Generated listings
+*_ti-basic.txt
+tns-programs*.txt
