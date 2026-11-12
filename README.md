@@ -9,12 +9,19 @@ Pure-Python tool for working with TI-Nspire documents (`.tns`) **without** the c
 It was consolidated from a larger collection of PowerShell/Python experiments; the container,
 encryption and compression handling is all Python now, and PowerShell 7 is just an optional front end.
 
+## Who is this for / what problem does it solve?
+
+TI-Nspire calculator documents (`.tns`) are a closed, compressed and partly encrypted format.
+If you wrote TI-Basic programs on the calculator or in the TI-Nspire software and want to
+**back them up, read them as text, edit them on a computer, or put them back**, this tool does that
+from the command line without needing the TI software. It is a read/rebuild tool, not an emulator.
+
 ## Install
 
 Requires Python 3.10+ (and `pip`).
 
 ```powershell
-git clone <this repo> ; cd ticalc-project
+git clone https://github.com/johnharolddunn/ticalc-project ; cd ticalc-project
 python -m venv .venv ; .\.venv\Scripts\Activate.ps1    # Linux/macOS: source .venv/bin/activate
 pip install .
 ```
@@ -64,6 +71,25 @@ error is shown. Always open the result in TI-Nspire software to confirm it runs.
 ```powershell
 pip install -e ".[dev]" ; pytest
 ```
+
+## Quick start (3 steps)
+
+1. Install as above, then check it works: `ticalc --version`
+2. Get your code out: `ticalc programs MyDoc.tns -o my-programs.txt`
+3. Edit the text, then put it back into a **copy**: `ticalc encode my-programs.txt --base MyDoc.tns -o MyDoc-edited.tns`
+
+Your original file is never changed. Errors print one clear line starting with `error:`.
+
+## Reporting a problem
+
+Please [open a GitHub issue](https://github.com/johnharolddunn/ticalc-project/issues/new/choose),
+or email **johnharoldpeterdunn@outlook.com**. Include the command you ran, the `error:` line, and
+`ticalc --version`. Run again with `--debug` for full details. **Do not attach personal documents
+you are not happy to share publicly.** This is a small hobby project maintained on a best-effort basis.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
 
 ## Limits (honest notes)
 
