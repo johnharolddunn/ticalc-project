@@ -54,7 +54,7 @@ error is shown. Always open the result in TI-Nspire software to confirm it runs.
 
 ```powershell
 ./scripts/ticalc.ps1 programs Actual.tns        # forwards all arguments, keeps the exit code
-./scripts/ticalc-menu.ps1                        # simple numbered menu
+./scripts/ticalc-menu.ps1                        # numbered menu (includes the EXE compiler)
 ```
 
 `ticalc.ps1` uses `.venv` if present, otherwise `python` on PATH, and installs the package on first run.
