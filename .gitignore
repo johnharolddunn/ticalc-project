@@ -20,6 +20,12 @@ dist/
 *.tns
 !tests/data/*.tns
 
+*.exe
+*.spec
+tibasic_compiler/Build/
+tibasic_compiler/Output/
+tibasic_compiler/Proof/
+
 # Generated listings
 *_ti-basic.txt
 tns-programs*.txt

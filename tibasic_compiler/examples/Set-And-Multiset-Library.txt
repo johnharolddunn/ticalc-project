@@ -1,0 +1,230 @@
+Define frequency(x,a)=Func
+Local i,c
+c:=0
+For i,1,dim(a)
+ If a[i]=x Then
+  c:=c+1
+ EndIf
+EndFor
+Return c
+EndFunc
+
+Define unique(a)=Func
+Local r,i
+r:={}
+For i,1,dim(a)
+ If frequency(a[i],r)=0 Then
+  r:=augment(r,{a[i]})
+ EndIf
+EndFor
+Return r
+EndFunc
+
+Define histogram(a)=Func
+Local u,f,i
+u:=unique(a)
+f:={}
+For i,1,dim(u)
+ f:=augment(f,{frequency(u[i],a)})
+EndFor
+Return {u,f}
+EndFunc
+
+Define rarity(a)=Func
+Local u,r,i
+u:=unique(a)
+r:={}
+For i,1,dim(u)
+ If frequency(u[i],a)=1 Then
+  r:=augment(r,{u[i]})
+ EndIf
+EndFor
+Return r
+EndFunc
+
+Define intersection(a,b)=Func
+Local r,i
+r:={}
+For i,1,dim(a)
+ If frequency(a[i],b)>0 and frequency(a[i],r)=0 Then
+  r:=augment(r,{a[i]})
+ EndIf
+EndFor
+Return r
+EndFunc
+
+Define union(a,b)=Func
+Local r,i
+r:={}
+For i,1,dim(a)
+ If frequency(a[i],r)=0 Then
+  r:=augment(r,{a[i]})
+ EndIf
+EndFor
+For i,1,dim(b)
+ If frequency(b[i],r)=0 Then
+  r:=augment(r,{b[i]})
+ EndIf
+EndFor
+Return r
+EndFunc
+
+Define difference(a,b)=Func
+Local r,i
+r:={}
+For i,1,dim(a)
+ If frequency(a[i],b)=0 Then
+  r:=augment(r,{a[i]})
+ EndIf
+EndFor
+Return r
+EndFunc
+
+Define symmetric_difference(a,b)=Func
+Return union(difference(a,b),difference(b,a))
+EndFunc
+
+Define subset(a,b)=Func
+Local i
+For i,1,dim(a)
+ If frequency(a[i],b)=0 Then
+  Return false
+ EndIf
+EndFor
+Return true
+EndFunc
+
+Define commonality(a,b)=Func
+Local r,i,c
+r:={}
+For i,1,dim(a)
+ c:=frequency(a[i],r)
+ If c<frequency(a[i],b) Then
+  r:=augment(r,{a[i]})
+ EndIf
+EndFor
+Return r
+EndFunc
+
+Define multiset_difference(a,b)=Func
+Local r,i,c
+r:={}
+For i,1,dim(a)
+ c:=frequency(a[i],left(a,i-1))
+ If c>=frequency(a[i],b) Then
+  r:=augment(r,{a[i]})
+ EndIf
+EndFor
+Return r
+EndFunc
+
+Define freq_commonality(a,b)=Func
+Local vals,shared,fa,fb
+Local i,x,cA,cB
+vals:={}
+shared:={}
+fa:={}
+fb:={}
+For i,1,dim(a)
+ x:=a[i]
+ If frequency(x,vals)=0 Then
+  cA:=frequency(x,a)
+  cB:=frequency(x,b)
+  If cB>0 Then
+   vals:=augment(vals,{x})
+   fa:=augment(fa,{cA})
+   fb:=augment(fb,{cB})
+   shared:=augment(shared,{min(cA,cB)})
+  EndIf
+ EndIf
+EndFor
+Return {vals,shared,fa,fb}
+EndFunc
+
+Define freq_union(a,b)=Func
+Local u,ufreq,fa,fb
+Local i,x,cA,cB
+u:=union(a,b)
+ufreq:={}
+fa:={}
+fb:={}
+For i,1,dim(u)
+ x:=u[i]
+ cA:=frequency(x,a)
+ cB:=frequency(x,b)
+ fa:=augment(fa,{cA})
+ fb:=augment(fb,{cB})
+ ufreq:=augment(ufreq,{max(cA,cB)})
+EndFor
+Return {u,ufreq,fa,fb}
+EndFunc
+
+Define similarity(a,b)=Func
+Local c,d
+c:=dim(commonality(a,b))
+d:=dim(a)+dim(b)
+If d=0 Then
+ Return 1
+EndIf
+Return 2*c/d
+EndFunc
+
+Define containment(a,b)=Func
+If dim(b)=0 Then
+ Return 1
+EndIf
+Return dim(commonality(a,b))/dim(b)
+EndFunc
+
+Define jaccard(a,b)=Func
+Local i,u
+i:=dim(intersection(a,b))
+u:=dim(union(a,b))
+If u=0 Then
+ Return 1
+EndIf
+Return i/u
+EndFunc
+
+Define multiset_containment(a,b)=Func
+Local fc,s,i
+If dim(b)=0 Then
+ Return 1
+EndIf
+fc:=freq_commonality(a,b)
+s:=0
+For i,1,dim(fc[2])
+ s:=s+fc[2][i]
+EndFor
+Return s/dim(b)
+EndFunc
+
+Define multiset_jaccard(a,b)=Func
+Local fc,fu,n,d,i
+fc:=freq_commonality(a,b)
+fu:=freq_union(a,b)
+n:=0
+d:=0
+For i,1,dim(fc[2])
+ n:=n+fc[2][i]
+EndFor
+For i,1,dim(fu[2])
+ d:=d+fu[2][i]
+EndFor
+If d=0 Then
+ Return 1
+EndIf
+Return n/d
+EndFunc
+
+Define set_uses()=Prgm
+Disp "PRACTICAL USES"
+Disp "intersection: common keywords, menu items, tags"
+Disp "union: merge distinct values"
+Disp "commonality: preserve duplicate matches"
+Disp "freq_commonality: frequency overlap profile"
+Disp "freq_union: frequency union profile"
+Disp "jaccard: set similarity"
+Disp "multiset_jaccard: frequency-aware similarity"
+Disp "multiset_containment: degree of containment"
+EndPrgm

@@ -1,0 +1,21 @@
+Define square(x)=Func
+:  Return x^2
+:EndFunc
+
+Define demo()=Prgm
+:  Local n,i,total,l
+:  Request "Enter a number",n
+:  total:=0
+:  For i,1,n
+:    total:=total+square(i)
+:  EndFor
+:  Disp "Sum of squares 1..n =",total
+:  l:=seq(k^2,k,1,5)
+:  Disp "Squares:",l
+:  If total>50 Then
+:    Disp "big"
+:  Else
+:    Disp "small"
+:  EndIf
+:  Disp "Half of n is",n/2
+:EndPrgm

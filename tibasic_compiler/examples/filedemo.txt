@@ -1,0 +1,17 @@
+Define filedemo()=Prgm
+:  Local p,l,n,out
+:  Disp "Pick a text file of numbers (one per line or comma separated)"
+:  p:=pickfile()
+:  If p="" Then
+:    Disp "No file chosen"
+:    Return
+:  EndIf
+:  l:=readnums(p)
+:  Disp "Numbers read:",dim(l)
+:  Disp "Sum:",sum(l)
+:  Disp "Max:",max(l)
+:  Disp "Min:",min(l)
+:  out:=p&".summary.txt"
+:  WriteLines out,{"count="&string(dim(l)),"sum="&string(sum(l))}
+:  Disp "Summary written to",out
+:EndPrgm

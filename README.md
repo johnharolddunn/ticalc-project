@@ -91,6 +91,14 @@ you are not happy to share publicly.** This is a small hobby project maintained 
 
 MIT, see [LICENSE](LICENSE).
 
+## TI-Basic → Windows EXE compiler (`tibasic_compiler/`)
+
+A separate, standalone tool: translates a TI-Basic text file (with a `Define x()=Prgm`) into Python and
+packages it as a console `.exe` with PyInstaller (auto-installed). Includes PC file-access extension
+commands. See [`tibasic_compiler/README.md`](tibasic_compiler/README.md) and `tibasic_compiler/examples/`.
+Run from that folder: `python tibasic_compiler.py examples/demo.txt`. Its translation of every example is
+covered by the tests; building an `.exe` itself is Windows-only and not run in CI.
+
 ## Limits (honest notes)
 
 - Only documents using the standard TNS container (compression method 13 or plain/deflate) are
