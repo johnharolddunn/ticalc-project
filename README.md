@@ -106,3 +106,14 @@ covered by the tests; building an `.exe` itself is Windows-only and not run in C
 - The Program Editor *widget tree* is not generated: programs are stored as symbols (visible to the
   calculator's catalog/variables), not as editor pages.
 - `.tns`/`.xml` files are git-ignored except `tests/data/*.tns`, so personal documents are not committed by accident.
+
+## Proofs
+
+`python proof/run_proof.py` (menu option 7) re-runs decode, encode and compile checks on the bundled samples and rewrites
+`proof/PROOF-REPORT.md`. `proof/compile-run-proof/` records one real run of a compiled `stats.exe` on 3000 values
+(the exe itself is not stored). `proof/original-encode-proof.txt` is the original encode round-trip note.
+Limits: this does not prove TI-Nspire software opens an encoded file.
+
+**Menu decision:** the compile option stays, but is labelled as a separate Windows-only tool, because it converts TI-Basic to a
+PC program and never touches `.tns` files. The old `TiCalc-Menu.ps1` depends on unported scripts and OneDrive paths, so the menu
+is a rewrite on top of the `ticalc` CLI instead of a copy.

@@ -1,0 +1,18 @@
+TI-CALC PURE AND MIXED ENCODING PROOF
+=====================================
+
+Both generated .tns files decoded successfully with TnsTools. For each output, decoded Document.xml and Problem1.xml were byte-for-byte identical to the generated .tns.xml folder.
+
+PURE
+  TNS: Operations\Outputs\Encoded\Pure-test-proof.tns
+  Source: Operations\Inputs\TiBasic\test.txt
+  Generated definitions decoded: PrepareMessage, TestProgram, StepMessage, FinishMessage
+
+MIXED
+  TNS: Operations\Outputs\Encoded\Actual-mixed-test.tns
+  Base: Learning\ReferenceLab\SourceTns\Actual.tns
+  Source: Operations\Inputs\TiBasic\test.txt
+  Generated definitions decoded: PrepareMessage, TestProgram, StepMessage, FinishMessage
+  Preserved from base: Document.xml, all 21 non-program/data symbols, and all 6 original cards.
+
+These checks prove the generated XML and TNS binary round-trip for these fixtures. They do not prove TI-Nspire Student Software load/run behavior; that remains a manual application check.

@@ -1,0 +1,804 @@
+Define colour()=Func
+  Return randInt(1,m)
+EndFunc
+
+Define colourcode()=Prgm
+Define code=newcolours()
+EndPrgm
+
+Define gc(guesses)=Prgm
+Local incr,ac,gp
+colourcode()
+For incr,1,guesses
+  ac:=rn_c()
+  gp:=guess(rn_c())
+  Disp gp
+EndFor
+EndPrgm
+
+Define gc3()=Prgm
+Local incr,ac,gp
+colourcode()
+For incr,1,3
+  ac:=rn_c()
+  gp:=guess(rn_c())
+  Disp gp
+  Disp "↵"
+EndFor
+EndPrgm
+
+Define gc5()=Prgm
+Local incr,ac,gp
+colourcode()
+For incr,1,5
+  ac:=rn_c()
+  gp:=guess(rn_c())
+  Disp gp
+  Disp "↵"
+EndFor
+Disp "↵"
+EndPrgm
+
+Define guess(tuvwx)=Func
+Local n,guesses,k,h,beads,z
+guesses:={}
+For n,1,n_beads
+  guesses:=augment(guesses,{uv(tuvwx,n)})
+EndFor
+If guesses≠tuvwx Then
+  Disp "guess fn→input err":Return 
+EndIf
+z:=guesses
+beads:=code
+For k,1,n_beads
+ If guesses[k]=code[k] Then
+   guesses[k]:=colrightloc
+   beads[k]:="."
+EndIf
+EndFor
+For k,1,n_beads
+ For h,1,n_beads
+  If guesses[h]=beads[k] Then
+    guesses[h]:=colwrongloc
+    beads[k]:="?"
+  EndIf
+ EndFor
+EndFor
+For h,1,m
+ For k,1,n_beads
+  If a[h]=beads[k] Then
+    beads[k]:="_"
+  EndIf
+  If a[h]=guesses[k] Then
+    guesses[k]:=""
+  EndIf
+ EndFor
+EndFor
+Return {guesses,z}
+EndFunc
+
+Define guess_peg(tuvwx)=Func
+Local n,guesses,k,h,beads,z
+guesses:={}
+For n,1,n_beads
+  guesses:=augment(guesses,{uv(tuvwx,n)})
+EndFor
+If guesses≠tuvwx Then
+  Disp "guess fn→input err"
+Return 
+EndIf
+z:=guesses
+beads:=code
+For k,1,n_beads
+ If guesses[k]=code[k] Then
+   guesses[k]:=colrightloc
+   beads[k]:="."
+EndIf
+EndFor
+For k,1,n_beads
+ For h,1,n_beads
+  If guesses[h]=beads[k] Then
+    guesses[h]:=colwrongloc
+    beads[k]:="?"
+  EndIf
+ EndFor
+EndFor
+For h,1,m
+ For k,1,n_beads
+  If a[h]=beads[k] Then
+    beads[k]:="_"
+  EndIf
+  If a[h]=guesses[k] Then
+    guesses[k]:=""
+  EndIf
+ EndFor
+EndFor
+Disp {rotate(guesses,randInt(1,4))}
+Return {z}
+EndFunc
+
+Define mastermind(n)=Prgm
+If dim(a)≠0 Then
+  Define m=dim(a)
+Else
+Define r="RED"
+Define o="ORANGE"
+Define y="YELLOW"
+Define g="GREEN"
+Define b="BLUE"
+Define e="EMPTY"
+Define colwrongloc="△"
+Define colrightloc="▲"
+Define m=dim(a)
+  If n≤m Then
+    Define n_beads=n
+  Else
+    Disp "no. of beads ≤ ",m
+  EndIf
+EndIf
+Define colour()=Func
+  Return randInt(1,m)
+EndFunc
+Define colourcode()=Prgm
+Define code=newcolours()
+EndPrgm
+Define gc(guesses)=Prgm
+Local incr,ac,gp
+colourcode()
+For incr,1,guesses
+  ac:=rn_c()
+  gp:=guess(rn_c())
+  Disp gp
+EndFor
+EndPrgm
+Define gc3()=Prgm
+Local incr,ac,gp
+colourcode()
+For incr,1,3
+  ac:=rn_c()
+  gp:=guess(rn_c())
+  Disp gp
+  Disp "↵"
+EndFor
+EndPrgm
+Define gc5()=Prgm
+Local incr,ac,gp
+colourcode()
+For incr,1,5
+  ac:=rn_c()
+  gp:=guess(rn_c())
+  Disp gp
+  Disp "↵"
+EndFor
+Disp "↵"
+EndPrgm
+Define guess(tuvwx)=Func
+Local n,guesses,k,h,beads,z
+guesses:={}
+For n,1,n_beads
+  guesses:=augment(guesses,{uv(tuvwx,n)})
+EndFor
+If guesses≠tuvwx Then
+  Disp "guess fn→input err":Return 
+EndIf
+z:=guesses
+beads:=code
+For k,1,n_beads
+ If guesses[k]=code[k] Then
+   guesses[k]:=colrightloc
+   beads[k]:="."
+EndIf
+EndFor
+For k,1,n_beads
+ For h,1,n_beads
+  If guesses[h]=beads[k] Then
+    guesses[h]:=colwrongloc
+    beads[k]:="?"
+  EndIf
+ EndFor
+EndFor
+For h,1,m
+ For k,1,n_beads
+  If a[h]=beads[k] Then
+    beads[k]:="_"
+  EndIf
+  If a[h]=guesses[k] Then
+    guesses[k]:=""
+  EndIf
+ EndFor
+EndFor
+Return {guesses,z}
+EndFunc
+Define guess_peg(tuvwx)=Func
+Local n,guesses,k,h,beads,z
+guesses:={}
+For n,1,n_beads
+  guesses:=augment(guesses,{uv(tuvwx,n)})
+EndFor
+If guesses≠tuvwx Then
+  Disp "guess fn→input err"
+Return 
+EndIf
+z:=guesses
+beads:=code
+For k,1,n_beads
+ If guesses[k]=code[k] Then
+   guesses[k]:=colrightloc
+   beads[k]:="."
+EndIf
+EndFor
+For k,1,n_beads
+ For h,1,n_beads
+  If guesses[h]=beads[k] Then
+    guesses[h]:=colwrongloc
+    beads[k]:="?"
+  EndIf
+ EndFor
+EndFor
+For h,1,m
+ For k,1,n_beads
+  If a[h]=beads[k] Then
+    beads[k]:="_"
+  EndIf
+  If a[h]=guesses[k] Then
+    guesses[k]:=""
+  EndIf
+ EndFor
+EndFor
+Disp {rotate(guesses,randInt(1,4))}
+Return {z}
+EndFunc
+Define newcolours()=Func
+  Return rn_c()
+EndFunc
+Define pegin(status)=Prgm
+    Local cpwp
+    For cpwp,1,dim(status)[2]
+            If status[1,cpwp]=colwrongloc Then
+              Local indx
+               For indx,1,dim(status)[2]
+                  If where_loc[indx]≠indx Then
+                    status[2,indx]:=status[2,cpwp]
+                  EndIf
+               EndFor
+               status:=guess(mat▶list(status[2]))
+            EndIf
+    EndFor
+    Local incr
+    For incr,1,dim(status)[2]
+      If status[1,incr]=colrightloc Then
+        where_loc[incr]:=incr
+        to_guess[incr]:=status[2,incr]
+        If where_loc=seq(s,s,1,n_beads) Then
+          Disp "found code",to_guess
+          Stop
+        Else
+          Disp "Locking to→",where_loc
+        EndIf
+      EndIf
+  EndFor
+  status:=guess(rn_c())
+  pegin(status)
+EndPrgm
+Define rn_c()=Func
+Local n,apnd
+apnd:={}
+For n,1,n_beads
+  apnd:=augment(apnd,{a[colour()]})
+EndFor
+    Return apnd
+EndFunc
+Define theory(abcde)=Func
+Disp guess(abcde)
+  code
+EndFunc
+Define uv(tuvwx,n)=Func
+If n>0 and n≤n_beads Then
+   Return tuvwx[n]
+EndIf
+EndFunc
+Define your_turn(the_code)=Prgm
+   If dim(the_code)≠n_beads Then
+        Disp "code elements at...",n_beads
+        Disp "Set Var → n_beads up too var_m at max."
+   Else
+       code:=the_code
+       status:=guess(rn_c())
+       Local t
+       to_guess:={}
+       For t,1,n_beads
+         to_guess:=augment(to_guess,{0})
+       EndFor
+       where_loc:=to_guess
+   EndIf
+EndPrgm
+  colourcode()
+EndPrgm
+
+Define mm_at_dist()=Prgm
+Define remote_mind()=Prgm
+Local remote_person
+remote_person:=a
+Request "MasterMind>"&"Pick→1 to "&string(m),remote_person,0
+remote_intel(remote_person)
+EndPrgm
+Define remote_intel(n)=Prgm
+If n≤m Then
+   ©
+   mastermind(n):remote_explain(n)
+   ©
+Else
+  Disp "beads set to ",n_beads," in max. of ",m," available colours"
+EndIf
+EndPrgm
+Define remote_explain(n)=Prgm
+Local rationale
+rationale:=[[string(colrightloc),"✓"][""" ""","≠"][string(colwrongloc),"%"]]
+©
+©
+©Request rationale[1,1],rationale[1,2],0
+©Request rationale[2,1],rationale[2,2],0
+©Request rationale[3,1],rationale[3,2],0
+©
+Request "Pegged Correctly",rationale[1,2],0
+Request "   Not Included   ",rationale[2,2],0
+Request "Pegged Wrongly ",rationale[3,2],0
+©
+Local reply,remote_person
+remote_person:=seq("?",s,1,n)
+reply:="External→"&string(remote_person)
+Request "Write Down Your Code",reply,1
+©
+Local status,found
+status:=guess(rn_c())
+found:=seq(found,found,1,n)
+status[1]:=list▶mat(found)
+©
+  remote_qa(status,remote_goal(n),rationale)
+©
+EndPrgm
+Define remote_qa(status,goal,rationale)=Prgm
+Local cdx,qa,remote,reply,found
+found:=goal
+remote:=newcolours()
+Request "Guess",remote,1
+For cdx,1,n_beads
+   For qa,1,3
+      reply:="Y/N"
+      Request rationale[qa,2]&string(cdx)&remote[cdx],reply,1
+      If reply="Y" Then
+        If rationale[qa,2]="✓" Then
+           status[1,cdx]:=rationale[qa,2]
+           status[2,cdx]:=remote[cdx]
+        EndIf
+        If status[1,cdx]≠"✓" Then
+             status[1,cdx]:=rationale[qa,2]
+             status[2,cdx]:=remote[cdx]
+        Else
+        EndIf
+        Disp "status",status
+        If status[1]=found Then
+           Stop
+        EndIf
+        Exit
+      EndIf
+   EndFor
+EndFor
+  If status[1]=goal Then
+    Stop
+  EndIf
+remote_qa(status,found,rationale)
+EndPrgm
+Define remote_goal(n)=Func
+Local goal
+goal:=seq("✓",goal,1,n)
+Return list▶mat(goal)
+EndFunc
+Define mm_atdist2()=Prgm
+© now override remote_qa()
+© whicn fn,s with remote_detect()
+Define remote_qa(status,goal,rationale)=Prgm
+Local statuscolour,sc,cdx,qa,remote,reply,found,skipnotincode
+skipnotincode:=2
+found:=goal
+statuscolour:="✓"
+©
+remote:=newcolours()
+©remote:=remote_logic(remote,status,statuscolour)
+Request "Guess",remote,1
+For cdx,1,n_beads
+   For qa,1,3,skipnotincode
+      reply:="Y/N"
+      Request rationale[qa,2]&string(cdx)&remote[cdx],reply,1
+      If reply="Y" Then
+         status:=remote_detect(remote,status,rationale,cdx,qa)
+         Disp "status",status
+         If goal=status[1] Then
+             Stop
+         Else
+             Exit
+         EndIf
+      EndIf
+   EndFor
+EndFor
+  If status[1]=goal Then
+    Stop
+  EndIf
+remote_qa(status,found,rationale)
+EndPrgm
+Define remote_detect(remote,status,rationale,cdx,qa)=Func
+If rationale[qa,2]="✓" Then
+    status[1,cdx]:=rationale[qa,2]
+    status[2,cdx]:=remote[cdx]
+EndIf
+If status[1,cdx]≠"✓" Then
+    status[1,cdx]:=rationale[qa,2]
+    status[2,cdx]:=remote[cdx]
+Else
+EndIf
+Return status
+EndFunc
+EndPrgm
+EndPrgm
+
+Define mm_atdist2()=Prgm
+© now override remote_qa()
+© whicn fn,s with remote_detect()
+Define remote_qa(status,goal,rationale)=Prgm
+Local statuscolour,sc,cdx,qa,remote,reply,found,skipnotincode
+skipnotincode:=2
+found:=goal
+statuscolour:="✓"
+©
+remote:=newcolours()
+©remote:=remote_logic(remote,status,statuscolour)
+Request "Guess",remote,1
+For cdx,1,n_beads
+   For qa,1,3,skipnotincode
+      reply:="Y/N"
+      Request rationale[qa,2]&string(cdx)&remote[cdx],reply,1
+      If reply="Y" Then
+         status:=remote_detect(remote,status,rationale,cdx,qa)
+         Disp "status",status
+         If goal=status[1] Then
+             Stop
+         Else
+             Exit
+         EndIf
+      EndIf
+   EndFor
+EndFor
+  If status[1]=goal Then
+    Stop
+  EndIf
+remote_qa(status,found,rationale)
+EndPrgm
+Define remote_detect(remote,status,rationale,cdx,qa)=Func
+If rationale[qa,2]="✓" Then
+    status[1,cdx]:=rationale[qa,2]
+    status[2,cdx]:=remote[cdx]
+EndIf
+If status[1,cdx]≠"✓" Then
+    status[1,cdx]:=rationale[qa,2]
+    status[2,cdx]:=remote[cdx]
+Else
+EndIf
+Return status
+EndFunc
+EndPrgm
+
+Define mm_clean()=Prgm
+DelVar mm_atdist2
+
+
+DelVar remote_mind,remote_intel,remote_goal,remote_explain,remote
+
+ DelVar remote_qa,remote_detect,remote_logic
+ 
+  DelVar a,b,e,g,m,o,y,code,colour,colourcode,colrightloc,colwrongloc,gc,gc3,gc5,guess,guess_peg,n_beads,newcolours,play,rn_c,theory,to_guess,uv,where_loc,your_turn,r
+  
+EndPrgm
+
+Define newcolours()=Func
+  Return rn_c()
+EndFunc
+
+Define pcycle(t)=Prgm
+  Local v,w
+  w:=0
+  For v,1,10
+    Disp "w=",w
+    w:=v
+    If v=t
+      Cycle
+    w:=0
+  EndFor
+  Disp "w=",w
+EndPrgm
+
+Define pegin(status)=Prgm
+    Local cpwp
+    For cpwp,1,dim(status)[2]
+            If status[1,cpwp]=colwrongloc Then
+              Local indx
+               For indx,1,dim(status)[2]
+                  If where_loc[indx]≠indx Then
+                    status[2,indx]:=status[2,cpwp]
+                  EndIf
+               EndFor
+               status:=guess(mat▶list(status[2]))
+            EndIf
+    EndFor
+    Local incr
+    For incr,1,dim(status)[2]
+      If status[1,incr]=colrightloc Then
+        where_loc[incr]:=incr
+        to_guess[incr]:=status[2,incr]
+        If where_loc=seq(s,s,1,n_beads) Then
+          Disp "found code",to_guess
+          Stop
+        Else
+          Disp "Locking to→",where_loc
+        EndIf
+      EndIf
+  EndFor
+  status:=guess(rn_c())
+  pegin(status)
+EndPrgm
+
+Define pexit(t)=Prgm
+  Local v,w
+  For v,1,5
+    For w,1,5
+      Disp v,w
+      If w=t Then
+        Exit
+      EndIf
+    EndFor
+    Disp v,w
+   EndFor
+  Disp v,w
+EndPrgm
+
+Define remote_colours()=Prgm
+  Local remote_person
+  remote_person:="a"
+  Request "name>colouration_var",remote_person,0
+  a:=expr(remote_person)
+EndPrgm
+
+Define remote_explain(n)=Prgm
+Local rationale
+rationale:=[[string(colrightloc),"✓"][""" ""","≠"][string(colwrongloc),"%"]]
+©
+©
+©Request rationale[1,1],rationale[1,2],0
+©Request rationale[2,1],rationale[2,2],0
+©Request rationale[3,1],rationale[3,2],0
+©
+Request "Pegged Correctly",rationale[1,2],0
+Request "   Not Included   ",rationale[2,2],0
+Request "Pegged Wrongly ",rationale[3,2],0
+©
+Local peg3,step_rat
+peg3:="y/n"
+Request "Rationalise with "&rationale[2,2],peg3,0
+If peg3="n" Then
+  step_rat:=2
+Else
+  step_rat:=1
+EndIf
+©
+Local reply,remote_person
+remote_person:=seq("?",s,1,n)
+reply:="External→"&string(remote_person)
+Request "Write Down Your Code",reply,1
+©
+Local status,found
+status:=guess(rn_c())
+found:=seq(found,found,1,n)
+status[1]:=list▶mat(found)
+© 
+  remote_mode()
+  Disp "mode set"
+  remote_qa(step_rat,status,remote_goal(n),rationale)
+ ©
+EndPrgm
+
+Define remote_fix(settings,status,remote,mmem)=Prgm
+  Local r_n
+  r_n:={"RANDOM","HOLD","TRIAL","SEQUENCE","ELIMINATION"}
+  If settings=r_n[1] Then
+    Define random=remote
+    remote_run:=r_n[1]
+  EndIf
+  If settings=r_n[2] Then
+    Define hold=rf_hold(remote,status)
+    remote_run:=r_n[2]
+  EndIf
+  If settings=r_n[3] Then
+    Define trial=rf_trial(remote,status)
+    remote_run:=r_n[3]
+  EndIf
+  If settings=r_n[4] Then
+    remote_fix(r_n[1],status,remote,mmem):remote:=expr(remote_run)
+    remote_fix(r_n[5],status,remote,mmem):remote:=expr(remote_run)
+    remote_fix(r_n[2],status,remote,mmem):remote:=expr(remote_run)
+    remote_fix(r_n[3],status,remote,mmem):remote:=expr(remote_run)
+    Define sequence=remote
+    remote_run:=r_n[4]
+  EndIf
+  If settings=r_n[5] Then
+    Define eliminate=rf_elimin8(remote,status,mmem)
+    remote_run:=r_n[5]
+  EndIf
+  Define cmem=mmem
+EndPrgm
+
+Define remote_goal(n)=Func
+Local goal
+goal:=seq("✓",goal,1,n)
+Return list▶mat(goal)
+EndFunc
+
+Define remote_intel(n)=Prgm
+If n≤m Then
+   ©
+   mastermind(n):remote_explain(n)
+   ©
+Else
+  Disp "beads set to ",n_beads," in max. of ",m," available colours"
+EndIf
+EndPrgm
+
+Define remote_mind()=Prgm
+Local remote_person
+remote_person:=a
+Request "MasterMind>"&"Pick→1 to "&string(m),remote_person,0
+remote_intel(remote_person)
+EndPrgm
+
+Define remote_mode()=Prgm
+Define cmem=a
+Local r_n,men_u,quest
+r_n:={"RANDOM","HOLD","TRIAL","SEQUENCE","ELIMINATION"}
+men_u:=0
+While men_u=0
+    For men_u,1,dim(r_n)
+       quest:="Y?"
+       RequestStr "Settings→"&r_n[men_u],quest,1
+       If quest="Y" Then
+          Exit
+       EndIf
+    EndFor
+    If quest≠"Y" Then
+      men_u:=0
+    Else
+      Exit
+    EndIf
+EndWhile
+Disp men_u,r_n[men_u]
+Define remote_run=r_n[men_u]
+EndPrgm
+
+Define remote_qa(step_rat,status,goal,rationale)=Prgm
+Local cdx,qa,remote,reply,found
+found:=goal
+remote_fix(remote_run,status,newcolours(),mmem)
+remote:=expr(remote_run)
+Disp "remote",remote
+Request "Guess",remote,1
+For cdx,1,n_beads
+   For qa,1,3,step_rat
+      reply:="Y/N"
+      Request rationale[qa,2]&string(cdx)&remote[cdx],reply,1
+      If reply="Y" Then
+        If rationale[qa,2]="✓" Then
+           status[1,cdx]:=rationale[qa,2]
+           status[2,cdx]:=remote[cdx]
+        EndIf
+        If status[1,cdx]≠"✓" Then
+             status[1,cdx]:=rationale[qa,2]
+             status[2,cdx]:=remote[cdx]
+        Else
+        EndIf
+        Disp "status",status
+        If status[1]=found Then
+           Stop
+        EndIf
+        Exit
+      EndIf
+   EndFor
+EndFor
+  If status[1]=goal Then
+    Stop
+  EndIf
+remote_qa(step_rat,status,found,rationale)
+EndPrgm
+
+Define rf_elimin8(remote,status,mmem)=Func
+Local t,ccode,cmmem
+  For t,1,dim(status[1])
+    If status[1,t]="≠" Then
+     cmmem:=newMat(1,mmem-1)
+     For ccode,1,dim(mmem)
+        If status[2,t]=mmem[1,ccode] Then
+        Else
+          cmmem[1,ccode]:=mmem[1,ccode]
+        EndIf
+     EndFor
+     mmem:=cmmem
+     remote[t]:=mmem[1,randInt(1,dim(mmem[1]),1)]
+    Else
+     remote[t]:=status[2,t]
+    EndIf
+  EndFor
+  Return remote
+EndFunc
+
+Define rf_hold(remote,status)=Func
+Local t
+  For t,1,dim(status[1])[2]
+    If status[1,t]="✓" Then
+      remote[t]:=status[2,t]
+    EndIf
+  EndFor
+  Return remote
+EndFunc
+
+Define rf_trial(remote,status)=Func
+Local t,nf,ft
+  For t,1,dim(status[1])
+    If status[1,t]="%" Then
+      ft:=randInt(1,dim(status[1]))
+      nf:=status[ft]
+      While "✓"=nf or ft=t
+        ft:=randInt(1,dim(status[1]))
+        nf:=status[ft]
+        Exit
+      EndWhile
+      remote[t]:=status[2,t]
+    EndIf
+  EndFor
+  Return remote
+EndFunc
+
+Define rn_c()=Func
+Local n,apnd
+apnd:={}
+For n,1,n_beads
+  apnd:=augment(apnd,{a[colour()]})
+EndFor
+    Return apnd
+EndFunc
+
+Define rtn_fn(f_n)=Prgm
+    expr(f_n)
+  EndPrgm
+
+Define theory(abcde)=Func
+Disp guess(abcde)
+  code
+EndFunc
+
+Define uv(tuvwx,n)=Func
+If n>0 and n≤n_beads Then
+   Return tuvwx[n]
+EndIf
+EndFunc
+
+Define your_turn(the_code)=Prgm
+   If dim(the_code)≠n_beads Then
+        Disp "code elements at...",n_beads
+        Disp "Set Var → n_beads up too var_m at max."
+   Else
+       code:=the_code
+       status:=guess(rn_c())
+       Local t
+       to_guess:={}
+       For t,1,n_beads
+         to_guess:=augment(to_guess,{0})
+       EndFor
+       where_loc:=to_guess
+   EndIf
+EndPrgm

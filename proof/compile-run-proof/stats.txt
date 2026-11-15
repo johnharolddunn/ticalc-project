@@ -1,0 +1,160 @@
+©  Statistics report for a PC data file - TI-Basic (compiled to exe by TiCalc)
+©  Reads numbers from a file you pick, writes <file>.stats.txt next to it.
+
+Define pct(s,n,p)=Func
+:  Local h,lo,hi
+:  h:=(n-1)*p/100+1
+:  lo:=floor(h)
+:  hi:=ceiling(h)
+:  Return s[lo]+(h-lo)*(s[hi]-s[lo])
+:EndFunc
+
+Define stats()=Prgm
+:  Local path,d,s,n,i,j,x,tot,m,v1,v0,sd,sd0,mn,mx,q1,q2,q3,iqr,m3,m4,sk,ku
+:  Local mo,mocnt,run,k,w,b,cnt,top,bar,out,rep,li,z,nz,fl,fh,nf,sx,sxx,sxy,slope,icpt,ac,den,se,cv,mad,rep2
+:  Disp "=== TI-Basic Statistics (PC file) ==="
+:  Disp "Choose a data file of numbers (comma / space / one per line)"
+:  path:=pickfile()
+:  If path="" Then
+:    Disp "No file chosen."
+:    Return
+:  EndIf
+:  d:=readnums(path)
+:  n:=dim(d)
+:  If n<4 Then
+:    Disp "Need at least 4 numbers. Found:",n
+:    Return
+:  EndIf
+:  Disp "File:",path
+:  Disp "Values read:",n
+:  s:=sorta(d)
+:  tot:=sum(d)
+:  m:=tot/n
+:  mn:=s[1]
+:  mx:=s[n]
+:  v1:=sum((d-m)^2)/(n-1)
+:  v0:=sum((d-m)^2)/n
+:  sd:=sqrt(v1)
+:  sd0:=sqrt(v0)
+:  q1:=pct(s,n,25)
+:  q2:=pct(s,n,50)
+:  q3:=pct(s,n,75)
+:  iqr:=q3-q1
+:  m3:=sum((d-m)^3)/n
+:  m4:=sum((d-m)^4)/n
+:  sk:=m3/sd0^3
+:  ku:=m4/sd0^4-3
+:  se:=sd/sqrt(n)
+:  cv:=0
+:  If m≠0 Then
+:    cv:=sd/abs(m)*100
+:  EndIf
+:  mad:=sum(abs(d-m))/n
+©  mode: longest run in the sorted list
+:  mo:=s[1]
+:  mocnt:=1
+:  run:=1
+:  For i,2,n
+:    If s[i]=s[i-1] Then
+:      run:=run+1
+:    Else
+:      run:=1
+:    EndIf
+:    If run>mocnt Then
+:      mocnt:=run
+:      mo:=s[i]
+:    EndIf
+:  EndFor
+©  outliers: |z|>3 and Tukey fences
+:  fl:=q1-1.5*iqr
+:  fh:=q3+1.5*iqr
+:  nz:=0
+:  nf:=0
+:  For i,1,n
+:    x:=d[i]
+:    If abs(x-m)>3*sd Then
+:      nz:=nz+1
+:    EndIf
+:    If x<fl or x>fh Then
+:      nf:=nf+1
+:    EndIf
+:  EndFor
+©  linear trend of value against position, and lag-1 autocorrelation
+:  sx:=0
+:  sxx:=0
+:  sxy:=0
+:  ac:=0
+:  den:=0
+:  For i,1,n
+:    sx:=sx+i
+:    sxx:=sxx+i*i
+:    sxy:=sxy+i*d[i]
+:    den:=den+(d[i]-m)^2
+:    If i>1 Then
+:      ac:=ac+(d[i]-m)*(d[i-1]-m)
+:    EndIf
+:  EndFor
+:  slope:=(n*sxy-sx*tot)/(n*sxx-sx*sx)
+:  icpt:=(tot-slope*sx)/n
+:  ac:=ac/den
+©  histogram with 10 bins
+:  k:=10
+:  w:=(mx-mn)/k
+:  If w=0 Then
+:    w:=1
+:  EndIf
+:  cnt:=seq(0,j,1,k)
+:  For i,1,n
+:    b:=floor((d[i]-mn)/w)+1
+:    If b>k Then
+:      b:=k
+:    EndIf
+:    cnt[b]:=cnt[b]+1
+:  EndFor
+:  top:=max(cnt)
+:  rep:=seq("",j,1,60)
+:  li:=0
+:  li:=li+1:rep[li]:="TI-Basic statistics report"
+:  li:=li+1:rep[li]:="File: "&path
+:  li:=li+1:rep[li]:="Count            : "&string(n)
+:  li:=li+1:rep[li]:="Sum              : "&string(tot)
+:  li:=li+1:rep[li]:="Mean             : "&string(m)
+:  li:=li+1:rep[li]:="Median           : "&string(q2)
+:  li:=li+1:rep[li]:="Mode             : "&string(mo)&"  (x"&string(mocnt)&")"
+:  li:=li+1:rep[li]:="Minimum          : "&string(mn)
+:  li:=li+1:rep[li]:="Maximum          : "&string(mx)
+:  li:=li+1:rep[li]:="Range            : "&string(mx-mn)
+:  li:=li+1:rep[li]:="Q1 / Q3          : "&string(q1)&" / "&string(q3)
+:  li:=li+1:rep[li]:="IQR              : "&string(iqr)
+:  li:=li+1:rep[li]:="P5 / P95         : "&string(pct(s,n,5))&" / "&string(pct(s,n,95))
+:  li:=li+1:rep[li]:="Variance (sample): "&string(v1)
+:  li:=li+1:rep[li]:="Std dev (sample) : "&string(sd)
+:  li:=li+1:rep[li]:="Std dev (popul.) : "&string(sd0)
+:  li:=li+1:rep[li]:="Std error       : "&string(se)
+:  li:=li+1:rep[li]:="95% CI of mean   : "&string(m-1.96*se)&" to "&string(m+1.96*se)
+:  li:=li+1:rep[li]:="Coeff. of var %  : "&string(cv)
+:  li:=li+1:rep[li]:="Mean abs dev     : "&string(mad)
+:  li:=li+1:rep[li]:="Skewness         : "&string(sk)
+:  li:=li+1:rep[li]:="Excess kurtosis  : "&string(ku)
+:  li:=li+1:rep[li]:="Outliers |z|>3   : "&string(nz)
+:  li:=li+1:rep[li]:="Outliers Tukey   : "&string(nf)&"  (fences "&string(fl)&" .. "&string(fh)&")"
+:  li:=li+1:rep[li]:="Trend slope/item : "&string(slope)&"  (intercept "&string(icpt)&")"
+:  li:=li+1:rep[li]:="Lag-1 autocorr   : "&string(ac)
+:  li:=li+1:rep[li]:="Histogram (10 bins):"
+:  For i,1,k
+:    bar:=""
+:    For j,1,floor(cnt[i]*40/top)
+:      bar:=bar&"#"
+:    EndFor
+:    li:=li+1:rep[li]:=string(round(mn+(i-1)*w,2))&" .. "&string(round(mn+i*w,2))&" | "&string(cnt[i])&" "&bar
+:  EndFor
+:  rep2:=seq(rep[j],j,1,li)
+:  Disp ""
+:  For i,1,li
+:    Disp rep2[i]
+:  EndFor
+:  out:=path&".stats.txt"
+:  WriteLines out,rep2
+:  Disp ""
+:  Disp "Report saved to",out
+:EndPrgm
